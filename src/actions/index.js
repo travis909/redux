@@ -15,3 +15,15 @@ export const sign_in = () => {
     type: 'SIGN_IN'
   };
 }
+
+export const setcol = () => {
+  return {
+    type: 'SETCOL'
+  };
+}
+
+export const setdata = () => {
+  return {
+    type: 'SETDATA'
+  };
+}
