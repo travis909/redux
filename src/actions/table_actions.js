@@ -1,34 +1,14 @@
 import axios from 'axios';
 
-// const url = 'https://jsonplaceholder.typicode.com/posts/1';
-
-export const setdata = (url) => {
-  console.log('retrieving data from - ' + url)
-  return {
-    type: 'SETDATA',
-    payload: () => {
-      axios.get(url)
-        .then(res => {
-          return res.data.data
-      })
-    }
-  } 
-}
-
 export const FETCH_DATA = 'FETCH_DATA';
-
-export const fetchData = (data) => {
-  return {
-    type: FETCH_DATA,
-    data
-  }
-};
+export const fetchData = (data) => { return { type: FETCH_DATA, data } }
 
 export const fetchAllData = (url) => {
   return (dispatch) => {
     return axios.get(url)
       .then(response => {
-        dispatch(fetchData(response.data))
+        let attributes = response.data.data.map(element => element.attributes)
+        dispatch(fetchData(attributes))
       })
       .catch(error => {
         throw(error);
@@ -36,4 +16,14 @@ export const fetchAllData = (url) => {
   };
 };
 
-export const setcol = () => { return { type: 'SETCOL' }; }
+export const SET_COLUMNS = 'SET_COLUMNS';
+export const setColumns = (columns) => { return { type: 'SET_COLUMNS', columns } }
+
+export const createColumns = (list) => { 
+  // list is an array of column headers to be changed to { Header: list[i], attributes: `column.${list[i].toLoweCase()}`}
+  // return will be an array of these classes
+  const column_setter = (el) => { return { Header: el, accessor: `item.${el.toLowerCase()}` } }
+  return(dispatch) => {
+    dispatch(setColumns(list.map((el) => column_setter(el))))
+  }
+}

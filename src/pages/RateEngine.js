@@ -1,35 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container } from 'semantic-ui-react';
 import TableComponent from '../components/TableComponent';
 // eslint-disable-next-line
 import { useSelector, useDispatch, connect } from 'react-redux';
-// eslint-disable-next-line
-import {bindActionCreators} from 'redux';
-// eslint-disable-next-line
-import { setdata, setcol, FETCH_DATA, fetchAllData } from '../actions/table_actions';
+import { createColumns, fetchAllData } from '../actions/table_actions';
+// import TestTable from '../components/TestTable';
+const RateEngine = () => {
+    const tableCols = ['Id', 'Name', 'Standard', 'Rate_Product', 'Rate_Entity', 'Rate_Method', 'Rate_Type'];
+    const dataUrl = 'http://rateengine-stage.carco2.local/api/v1/rate_engines/summary';
 
-// store.dispatch(fetchAllData('https://jsonplaceholder.typicode.com/posts'));
-
-const RateEngine = (props) => {
-    // const dispatch = useDispatch();
-    // const url = 'https://jsonplaceholder.typicode.com/posts';
-    const tableData = useSelector(state => state.data)
-
-    // eslint-disable-next-line
-    const columns = useSelector(state => state.columns)
+    useEffect(() => console.log('mounted'))
+    useEffect(() => createColumns(tableCols))
+    useEffect(() => fetchAllData(dataUrl))
 
     return (
-        <Container>
+        <Container textAlign={"center"}>
             <h1>Rate Engine</h1>
-            <TableComponent
-                columns={['userId', 'id', 'title' /*'ID', 'Name', 'Standard', 'Rate Product', 'Rate Entity', 'Rate Method', 'Rate Type', ''*/]}
-                //columns={() => useDispatch(setcol()/*(url)*/)} 
-                data={tableData}
-            />
+            <TableComponent columns={tableCols} data={useSelector(state => state.data)} url={dataUrl}/>
         </Container>
     )
 }
 
-const mapStateToProps = (state) => { return { data: state.data } }
+const mapStateToProps = (state) => { return { data: state.data, columns: state.columns } }
+const mapDispatchToProps = { createColumns, fetchAllData }
 
-export default connect(mapStateToProps)(RateEngine);
+export default connect(mapStateToProps, mapDispatchToProps )(RateEngine);

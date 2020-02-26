@@ -4,7 +4,9 @@ import RateEngine from './pages/RateEngine';
 export default class App extends Component {
   render() {
     return (
-      <RateEngine/>
+      <div>
+        <RateEngine/>
+      </div>
     )
   }
 }

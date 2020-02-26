@@ -1,7 +1,12 @@
 const columnsReducer = (state = [], action) => {
   switch (action.type) {
-    case 'SETCOL':
-      return (x) => state + [{Header: x, accessor: 'item.'+x}]
+    case 'SET_COLUMNS':
+      return [
+        ...state,
+        {
+          columns: action.columns,
+        }
+      ];
     default:
       return state;
   }
