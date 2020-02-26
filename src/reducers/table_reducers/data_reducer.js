@@ -1,6 +1,6 @@
 const dataReducer = (state = [], action) => {
   switch (action.type) {
-    case 'SETDATA':
+    case 'FETCH_DATA':
       return [
         ...state,
         {
@@ -11,7 +11,5 @@ const dataReducer = (state = [], action) => {
       return state;
   }
 }
-
-
 
 export default dataReducer;

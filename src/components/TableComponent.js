@@ -29,8 +29,8 @@ const TableComponent = (props) => {
               })}
             </Table.Row>
         </Table.Header>
-        {/* <Table.Body>
-            {_.map(this.props.data,
+        <Table.Body>
+            {_.map(props.data.data,
                 ({ id, name, standard, rate_product, rate_entity, rate_method, rate_type }) => (
                     <Table.Row key={id}>
                         <Table.Cell>{id}</Table.Cell>
@@ -48,7 +48,7 @@ const TableComponent = (props) => {
                         </Table.Cell>
                     </Table.Row>
                 ))}
-        </Table.Body> */}
+        </Table.Body>
     </Table>
   )
 }
